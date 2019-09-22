@@ -1,5 +1,6 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.controller;
 
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ZrDetalhamento;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.service.ZrDetalhamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ public class ZrDetalhamentoController {
     private ZrDetalhamentoService zrDetalhamentoService;
 
     @GetMapping
-    List<ZrDetalhamento> buscarTodos() {
+    public List<ZrDetalhamento> buscarTodos() {
         return zrDetalhamentoService.buscarTodos();
     }
 
     @GetMapping("{zonaResidencialId}")
-    List<ZrDetalhamento> buscarUm(@PathVariable Integer zonaResidencialId) {
+    public List<ZrDetalhamento> buscarUm(@PathVariable Integer zonaResidencialId) {
         return zrDetalhamentoService.buscarUm(zonaResidencialId);
+    }
+
+    @GetMapping("/inscricao-imobiliaria/{inscricaoImobiliariaCodigo}")
+    public InscricaoImobiliariaResponse buscarPorInscricaoImobiliaria(@PathVariable String inscricaoImobiliariaCodigo) {
+        return zrDetalhamentoService.buscarPorInscricaoImobiliaria(inscricaoImobiliariaCodigo);
     }
 }

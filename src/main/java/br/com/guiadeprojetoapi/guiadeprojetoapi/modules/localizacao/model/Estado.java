@@ -1,4 +1,4 @@
-package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao;
+package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
