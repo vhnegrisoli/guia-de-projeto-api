@@ -43,6 +43,11 @@ public class Usuario {
     @NotNull
     private Permissao permissao;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_TIPO_ACESSO")
+    @NotNull
+    private TipoAcesso tipoAcesso;
+
     @Column(name = "DATA_CADASTRO")
     @NotNull
     private LocalDateTime dataCadastro;

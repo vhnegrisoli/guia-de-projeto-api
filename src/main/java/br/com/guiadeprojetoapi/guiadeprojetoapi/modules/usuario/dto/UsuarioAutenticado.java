@@ -1,6 +1,7 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto;
 
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.ETipoAcesso;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,8 @@ public class UsuarioAutenticado {
     private String descricao;
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
     private LocalDateTime ultimoAcesso;
+    private ETipoAcesso tipoAcesso;
+    private String descricaoAcesso;
 
     public boolean isAdmin() {
         return permissao.equals(ADMIN);
@@ -42,6 +45,8 @@ public class UsuarioAutenticado {
         BeanUtils.copyProperties(usuario, usuarioAutenticado);
         usuarioAutenticado.setPermissao(usuario.getPermissao().getPermissao());
         usuarioAutenticado.setDescricao(usuario.getPermissao().getDescricao());
+        usuarioAutenticado.setTipoAcesso(usuario.getTipoAcesso().getCodigo());
+        usuarioAutenticado.setDescricaoAcesso(usuario.getTipoAcesso().getDescricao());
         return usuarioAutenticado;
     }
 }
