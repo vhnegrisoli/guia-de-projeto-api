@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface InscricaoImobiliariaRepository extends JpaRepository<InscricaoImobiliaria, Integer> {
 
     Optional<InscricaoImobiliaria> findByCodigoInscricao(String codigoInscricao);
+
+    Optional<InscricaoImobiliaria> findByEnderecoId(Integer enderecoId);
+
 }

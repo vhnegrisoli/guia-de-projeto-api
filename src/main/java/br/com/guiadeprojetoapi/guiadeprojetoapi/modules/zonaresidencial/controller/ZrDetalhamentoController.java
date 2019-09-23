@@ -32,4 +32,9 @@ public class ZrDetalhamentoController {
     public InscricaoImobiliariaResponse buscarPorInscricaoImobiliaria(@PathVariable String inscricaoImobiliariaCodigo) {
         return zrDetalhamentoService.buscarPorInscricaoImobiliaria(inscricaoImobiliariaCodigo);
     }
+
+    @GetMapping("/cep/{cep}")
+    public InscricaoImobiliariaResponse buscarPorCep(@PathVariable String cep) {
+        return zrDetalhamentoService.buscarPorCep(cep);
+    }
 }
