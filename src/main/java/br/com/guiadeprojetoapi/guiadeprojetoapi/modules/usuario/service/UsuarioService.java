@@ -10,12 +10,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.exception.UsuarioException.*;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario.of;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado.of;
 
 @Service
 @Slf4j
@@ -54,6 +56,13 @@ public class UsuarioService {
             });
     }
 
+    @Transactional
+    public UsuarioAutenticado getUsuarioAutenticadoAtualizaUltimaData() {
+        var usuarioLogado = getUsuarioAutenticado();
+        usuarioRepository.atualizarUltimoAcesso(LocalDateTime.now(), usuarioLogado.getId());
+        return of(usuarioRepository.findById(usuarioLogado.getId()).orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
+    }
+
     public UsuarioAutenticado getUsuarioAutenticado() {
         var email = "";
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,7 +74,7 @@ public class UsuarioService {
             log.error(ex.getMessage());
             throw USUARIO_SEM_SESSAO.getException();
         }
-        return UsuarioAutenticado.of(usuarioRepository.findByEmail(email).orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
+        return of(usuarioRepository.findByEmail(email).orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
     }
 
     public List<Usuario> getUsuarios() {
@@ -75,13 +84,5 @@ public class UsuarioService {
         }
         return List.of(usuarioRepository.findById(usuarioAutenticado.getId())
             .orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
-    }
-
-    public void atualizarUltimoAcesso() {
-        usuarioRepository.findById(getUsuarioAutenticado().getId())
-            .ifPresent(usuario -> {
-                usuario.setUltimoAcesso(LocalDateTime.now());
-                usuarioRepository.save(usuario);
-            });
     }
 }
