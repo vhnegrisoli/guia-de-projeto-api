@@ -85,4 +85,22 @@ public class UsuarioService {
         return List.of(usuarioRepository.findById(usuarioAutenticado.getId())
             .orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
     }
+
+    public UsuarioAutenticado findUsuarioAutenticadoByEmail() {
+        return usuarioRepository.findUsuarioAutenticadoByEmail(getUsuarioAutenticado().getEmail());
+    }
+
+    public String getEmail() {
+        var email = "";
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            if (principal instanceof UserDetails) {
+                email = ((UserDetails)principal).getUsername();
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            throw USUARIO_SEM_SESSAO.getException();
+        }
+        return email;
+    }
 }
