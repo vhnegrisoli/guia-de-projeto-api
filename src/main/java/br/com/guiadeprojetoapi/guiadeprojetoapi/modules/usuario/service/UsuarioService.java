@@ -29,38 +29,49 @@ public class UsuarioService {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     public void save(UsuarioRequest usuarioRequest) {
-        validarDadosUsuario(usuarioRequest);
         var usuario = of(usuarioRequest);
+        validarDadosUsuario(usuario);
         usuario.setSenha(bcryptPasswordEncoder.encode(usuarioRequest.getSenha()));
         usuario.setDataCadastro(LocalDateTime.now());
         usuario.setUltimoAcesso(LocalDateTime.now());
         usuarioRepository.save(usuario);
     }
 
-    private void validarDadosUsuario(UsuarioRequest usuarioRequest) {
-        validarEmailExistente(usuarioRequest.getEmail());
-        validarCpfExistente(usuarioRequest.getCpf());
+    private void validarDadosUsuario(Usuario usuario) {
+        validarEmailExistente(usuario);
+        validarCpfExistente(usuario);
     }
 
-    private void validarEmailExistente(String email) {
-        usuarioRepository.findByEmail(email)
+    private void validarEmailExistente(Usuario usuario) {
+        usuarioRepository.findByEmail(usuario.getEmail())
             .ifPresent(usuarioExistente -> {
-                throw USUARIO_EMAIL_JA_CADASTRADO.getException();
+                if (usuario.isNovoCadastro() || !usuario.getId().equals(usuarioExistente.getId())) {
+                    throw USUARIO_EMAIL_JA_CADASTRADO.getException();
+                }
             });
     }
 
-    private void validarCpfExistente(String cpf) {
-        usuarioRepository.findByCpf(cpf)
+    private void validarCpfExistente(Usuario usuario) {
+        usuarioRepository.findByCpf(usuario.getCpf())
             .ifPresent(usuarioExistente -> {
-                throw USUARIO_CPF_JA_CADASTRADO.getException();
+                if (usuario.isNovoCadastro() || !usuario.getId().equals(usuarioExistente.getId())) {
+                    throw USUARIO_CPF_JA_CADASTRADO.getException();
+                }
             });
     }
 
     @Transactional
     public UsuarioAutenticado getUsuarioAutenticadoAtualizaUltimaData() {
-        var usuarioLogado = getUsuarioAutenticado();
-        usuarioRepository.atualizarUltimoAcesso(LocalDateTime.now(), usuarioLogado.getId());
-        return of(usuarioRepository.findById(usuarioLogado.getId()).orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
+        var usuarioAtualizado = usuarioRepository
+            .findById(getUsuarioAutenticado().getId())
+            .orElseThrow(USUARIO_NAO_ENCONTRADO::getException);
+        return of(atualizarUltimoAcesso(usuarioAtualizado));
+    }
+
+    @Transactional
+    private Usuario atualizarUltimoAcesso(Usuario usuario) {
+        usuario.setUltimoAcesso(LocalDateTime.now());
+        return usuarioRepository.save(usuario);
     }
 
     public UsuarioAutenticado getUsuarioAutenticado() {
@@ -87,10 +98,10 @@ public class UsuarioService {
     }
 
     public UsuarioAutenticado findUsuarioAutenticadoByEmail() {
-        return usuarioRepository.findUsuarioAutenticadoByEmail(getUsuarioAutenticado().getEmail());
+        return usuarioRepository.findUsuarioAutenticadoByEmail(getEmail());
     }
 
-    public String getEmail() {
+    private String getEmail() {
         var email = "";
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
