@@ -1,6 +1,7 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model;
 
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.USER;
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Data
 @AllArgsConstructor
@@ -60,12 +62,18 @@ public class Usuario {
     @CPF
     private String cpf;
 
+    @JsonIgnore
+    public boolean isNovoCadastro() {
+        return isEmpty(id);
+    }
+
     public static Usuario of(UsuarioRequest usuarioRequest) {
         var usuario = new Usuario();
         BeanUtils.copyProperties(usuarioRequest, usuario);
         usuario.setDataCadastro(LocalDateTime.now());
         usuario.setUltimoAcesso(LocalDateTime.now());
         usuario.setPermissao(new Permissao(1, USER, "Usuário"));
+        usuario.setTipoAcesso(new TipoAcesso(usuarioRequest.getTipoAcessoId()));
         return usuario;
     }
 }
