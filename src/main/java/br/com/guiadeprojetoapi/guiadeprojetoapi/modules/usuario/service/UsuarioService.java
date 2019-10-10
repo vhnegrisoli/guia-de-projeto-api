@@ -32,8 +32,6 @@ public class UsuarioService {
         var usuario = of(usuarioRequest);
         validarDadosUsuario(usuario);
         usuario.setSenha(bcryptPasswordEncoder.encode(usuarioRequest.getSenha()));
-        usuario.setDataCadastro(LocalDateTime.now());
-        usuario.setUltimoAcesso(LocalDateTime.now());
         usuarioRepository.save(usuario);
     }
 

@@ -2,7 +2,9 @@ package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.controller;
 
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioRequest;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.TipoAcesso;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.repository.TipoAcessoRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,12 +13,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.ETipoAcesso.B2VN;
+
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private TipoAcessoRepository tipoAcessoRepository;
+
+    @GetMapping("/tipos-acesso")
+    public List<TipoAcesso> buscarTodosTiposAcesso() {
+        return tipoAcessoRepository.findByCodigoNotIn(B2VN);
+    }
 
     @GetMapping("/check-session")
     public ResponseEntity checkSession() {

@@ -73,6 +73,7 @@ public class Usuario {
         usuario.setDataCadastro(LocalDateTime.now());
         usuario.setUltimoAcesso(LocalDateTime.now());
         usuario.setPermissao(new Permissao(1, USER, "Usuário"));
+        usuario.setTipoAcesso(new TipoAcesso(usuarioRequest.getTipoAcessoId()));
         return usuario;
     }
 }

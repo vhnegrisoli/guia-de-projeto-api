@@ -29,4 +29,8 @@ public class TipoAcesso {
     @Column(name = "DESCRICAO")
     @NotNull
     private String descricao;
+
+    TipoAcesso(Integer id) {
+        this.id = id;
+    }
 }
