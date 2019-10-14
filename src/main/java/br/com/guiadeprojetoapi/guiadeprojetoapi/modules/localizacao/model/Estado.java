@@ -20,10 +20,6 @@ public class Estado {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name = "CODIGO_IBGE")
-    @NotNull
-    private Integer codigoIbge;
-
     @Column(name = "ESTADO")
     @NotNull
     private String estado;
