@@ -4,7 +4,9 @@ import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.consulta.dto.ConsultaReq
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.consulta.dto.ConsultaResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.consulta.repository.ConsultaRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.service.UsuarioService;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.InscricaoImobiliariaRepository;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.service.ZrDetalhamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,10 @@ public class ConsultaService {
     private UsuarioService usuarioService;
     @Autowired
     private InscricaoImobiliariaRepository inscricaoImobiliariaRepository;
+    @Autowired
+    private ZrDetalhamentoService zrDetalhamentoService;
 
-    public void save(ConsultaRequest request) {
+    public InscricaoImobiliariaResponse save(ConsultaRequest request) {
         var usuarioLogado = usuarioService.getUsuarioAutenticado();
         var consulta = of(request, usuarioLogado);
         consulta.setInscricaoImobiliaria(inscricaoImobiliariaRepository
@@ -34,6 +38,8 @@ public class ConsultaService {
             .orElseThrow(INSCRICAO_NAO_ENCONTRADA::getException));
         validarQuantidadeDeConsultas(usuarioLogado.getId());
         consultaRepository.save(consulta);
+        return zrDetalhamentoService
+            .buscarPorInscricaoImobiliaria(consulta.getInscricaoImobiliaria().getCodigoInscricao());
     }
 
     private void validarQuantidadeDeConsultas(Integer usuarioId) {
