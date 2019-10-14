@@ -18,11 +18,6 @@ public class ZrDetalhamentoController {
     @Autowired
     private ZrDetalhamentoService zrDetalhamentoService;
 
-    @GetMapping
-    public List<ZrDetalhamento> buscarTodos() {
-        return zrDetalhamentoService.buscarTodos();
-    }
-
     @GetMapping("{zonaResidencialId}")
     public List<ZrDetalhamento> buscarUm(@PathVariable Integer zonaResidencialId) {
         return zrDetalhamentoService.buscarUm(zonaResidencialId);

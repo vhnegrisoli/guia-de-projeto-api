@@ -1,9 +1,11 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.model;
 
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.dto.EnderecoRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
