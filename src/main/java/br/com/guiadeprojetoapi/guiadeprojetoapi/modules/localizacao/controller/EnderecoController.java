@@ -16,18 +16,18 @@ public class EnderecoController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED, reason = "Endereço inserido com sucesso!")
-    private void save(@RequestBody EnderecoRequest request) {
+    public void save(@RequestBody EnderecoRequest request) {
         enderecoService.save(request);
     }
 
     @PutMapping
     @ResponseStatus(code = HttpStatus.CREATED, reason = "Endereço alterado com sucesso!")
-    private void alterar(@RequestBody EnderecoRequest request) {
+    public void alterar(@RequestBody EnderecoRequest request) {
         enderecoService.save(request);
     }
 
     @GetMapping("{id}")
-    private Endereco buscar(@PathVariable Integer id) {
+    public Endereco buscar(@PathVariable Integer id) {
         return enderecoService.buscar(id);
     }
 }

@@ -67,6 +67,10 @@ public class Usuario {
         return isEmpty(id);
     }
 
+    public Usuario(Integer id) {
+        this.id = id;
+    }
+
     public static Usuario of(UsuarioRequest usuarioRequest) {
         var usuario = new Usuario();
         BeanUtils.copyProperties(usuarioRequest, usuario);

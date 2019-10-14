@@ -4,7 +4,6 @@ import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.dto.Endereco
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.model.Endereco;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.repository.CidadeRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.repository.EnderecoRepository;
-import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +19,6 @@ public class EnderecoService {
 
     @Autowired
     private CidadeRepository cidadeRepository;
-
-    @Autowired
-    private EstadoRepository estadoRepository;
 
     public void save(EnderecoRequest request) {
         enderecoRepository.save(of(request, cidadeRepository.findByNome(request.getLocalidade())
