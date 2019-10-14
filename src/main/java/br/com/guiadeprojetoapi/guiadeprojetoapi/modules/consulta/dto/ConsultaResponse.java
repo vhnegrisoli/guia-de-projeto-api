@@ -24,6 +24,7 @@ public class ConsultaResponse {
     public static ConsultaResponse of(Consulta consulta) {
         var response = new ConsultaResponse();
         BeanUtils.copyProperties(consulta, response);
+        response.setCodigoInscricao(consulta.getInscricaoImobiliaria().getCodigoInscricao());
         return response;
     }
 }

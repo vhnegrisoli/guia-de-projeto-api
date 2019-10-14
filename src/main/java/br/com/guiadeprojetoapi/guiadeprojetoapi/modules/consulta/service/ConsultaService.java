@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.consulta.exception.ConsultaException.CONSULTA_LIMITE_ATINGIDO;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.consulta.model.Consulta.of;
@@ -45,10 +44,6 @@ public class ConsultaService {
     }
 
     public List<ConsultaResponse> buscarConsultas() {
-        return consultaRepository
-            .findByUsuarioId(usuarioService.getUsuarioAutenticado().getId())
-            .stream()
-            .map(ConsultaResponse::of)
-            .collect(Collectors.toList());
+        return consultaRepository.findByUsuarioId(usuarioService.getUsuarioAutenticado().getId());
     }
 }

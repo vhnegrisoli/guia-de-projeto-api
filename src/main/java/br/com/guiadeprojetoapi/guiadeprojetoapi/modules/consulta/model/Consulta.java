@@ -33,7 +33,7 @@ public class Consulta {
     @NotNull
     private LocalDateTime dataConsulta;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn(name = "FK_INSCRICAO_IMOBILIARIA")
     private InscricaoImobiliaria inscricaoImobiliaria;
