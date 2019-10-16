@@ -18,11 +18,6 @@ public class ZrDetalhamentoController {
     @Autowired
     private ZrDetalhamentoService zrDetalhamentoService;
 
-    @GetMapping("{zonaResidencialId}")
-    public List<ZrDetalhamento> buscarUm(@PathVariable Integer zonaResidencialId) {
-        return zrDetalhamentoService.buscarUm(zonaResidencialId);
-    }
-
     @GetMapping("/inscricao-imobiliaria/{inscricaoImobiliariaCodigo}")
     public InscricaoImobiliariaResponse buscarPorInscricaoImobiliaria(@PathVariable String inscricaoImobiliariaCodigo) {
         return zrDetalhamentoService.buscarPorInscricaoImobiliaria(inscricaoImobiliariaCodigo);
@@ -31,5 +26,11 @@ public class ZrDetalhamentoController {
     @GetMapping("/cep/{cep}")
     public InscricaoImobiliariaResponse buscarPorCep(@PathVariable String cep) {
         return zrDetalhamentoService.buscarPorCep(cep);
+    }
+
+    @GetMapping("zoneamento/{zonaResidencialId}/sub-zoneamento/{classificacaoResidencialId}")
+    public List<ZrDetalhamento> buscarDetalhamentos(@PathVariable Integer zonaResidencialId,
+                                                    @PathVariable Integer classificacaoResidencialId) {
+        return zrDetalhamentoService.buscarDetalhamentos(zonaResidencialId, classificacaoResidencialId);
     }
 }

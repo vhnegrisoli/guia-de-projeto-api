@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ZrDetalhamentoRepository extends JpaRepository<ZrDetalhamento, Integer> {
 
-    List<ZrDetalhamento> findByZonaResidencialId(Integer zonaResidencialId);
+    List<ZrDetalhamento> findByZonaResidencialIdAndClassificacaoResidencialId(Integer zonaResidencialId,
+                                                                              Integer classificacaoResidencialId);
 
 }

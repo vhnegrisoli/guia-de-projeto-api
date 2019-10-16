@@ -1,7 +1,7 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto;
 
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ClassificacaoResidencial;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.InscricaoImobiliaria;
-import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ZrDetalhamento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,14 +16,13 @@ import java.util.List;
 public class InscricaoImobiliariaResponse {
 
     private InscricaoImobiliaria inscricaoImobiliaria;
-    private List<ZrDetalhamento> detalhamento;
+    private List<ClassificacaoResidencial> classificacoes;
 
     public static InscricaoImobiliariaResponse of(InscricaoImobiliaria inscricaoImobiliaria,
-                                                  List<ZrDetalhamento> zrDetalhamento) {
+                                                  List<ClassificacaoResidencial> classificacoes) {
         var response = new InscricaoImobiliariaResponse();
         response.setInscricaoImobiliaria(inscricaoImobiliaria);
-        response.setDetalhamento(zrDetalhamento);
+        response.setClassificacoes(classificacoes);
         return response;
     }
-
 }

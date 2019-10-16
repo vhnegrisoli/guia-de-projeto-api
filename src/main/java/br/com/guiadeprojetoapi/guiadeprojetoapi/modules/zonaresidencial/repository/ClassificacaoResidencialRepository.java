@@ -3,5 +3,6 @@ package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.reposit
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ClassificacaoResidencial;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClassificacaoResidencialRepository extends JpaRepository<ClassificacaoResidencial, Integer> {
+public interface ClassificacaoResidencialRepository extends JpaRepository<ClassificacaoResidencial, Integer>,
+    ClassificacaoResidencialRepositoryCustom {
 }
