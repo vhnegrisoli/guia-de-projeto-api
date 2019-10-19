@@ -5,8 +5,8 @@ import lombok.Getter;
 
 public enum ZonaResidencialException {
 
-    INSCRICAO_NAO_ENCONTRADA(new ValidacaoException("A inscrição imobiliária não foi encontrada."));
-
+    INSCRICAO_NAO_ENCONTRADA(new ValidacaoException("A inscrição imobiliária não foi encontrada.")),
+    ZONA_RESIDENCIAL_NAO_ENCONTRADA(new ValidacaoException("A zona residencial não foi encontrada."));
     @Getter
     private ValidacaoException exception;
 

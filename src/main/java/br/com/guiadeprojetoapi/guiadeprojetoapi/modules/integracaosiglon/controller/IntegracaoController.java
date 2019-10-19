@@ -15,6 +15,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/integracao-siglon")
 public class IntegracaoController {
+
     @Autowired
     private IntegracaoService integracaoService;
 

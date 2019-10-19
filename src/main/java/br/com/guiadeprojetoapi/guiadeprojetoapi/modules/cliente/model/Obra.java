@@ -1,11 +1,9 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.cliente.model;
 
-import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,24 +13,23 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Data
 @Entity
-@Table(name = "CLIENTE")
-public class Cliente {
+@Table(name = "OBRA")
+public class Obra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name = "NOME", length = 120)
+    @Column(name = "NOME")
     @NotNull
     private String nome;
 
-    @Column(name = "CPF")
+    @Column(name = "DESCRICAO")
     @NotNull
-    @CPF
-    private String cpf;
+    private String descricao;
 
+    @JoinColumn(name = "FK_CLIENTE")
     @ManyToOne
-    @JoinColumn(name = "FK_USUARIO")
     @NotNull
-    private Usuario usuario;
+    Cliente cliente;
 }

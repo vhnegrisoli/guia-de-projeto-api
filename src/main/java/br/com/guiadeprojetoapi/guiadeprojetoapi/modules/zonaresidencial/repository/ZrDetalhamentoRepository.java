@@ -9,5 +9,4 @@ public interface ZrDetalhamentoRepository extends JpaRepository<ZrDetalhamento, 
 
     List<ZrDetalhamento> findByZonaResidencialIdAndClassificacaoResidencialId(Integer zonaResidencialId,
                                                                               Integer classificacaoResidencialId);
-
 }

@@ -1,6 +1,8 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.controller;
 
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.SubZonaResponse;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.enums.EZonaResidencial;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ZrDetalhamento;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.service.ZrDetalhamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,12 @@ public class ZrDetalhamentoController {
     @GetMapping("/inscricao-imobiliaria/{inscricaoImobiliariaCodigo}")
     public InscricaoImobiliariaResponse buscarPorInscricaoImobiliaria(@PathVariable String inscricaoImobiliariaCodigo) {
         return zrDetalhamentoService.buscarPorInscricaoImobiliaria(inscricaoImobiliariaCodigo);
+    }
+
+    @GetMapping("{zonaResidencial}")
+    public SubZonaResponse buscarPorZonaResidencial(@PathVariable(name = "zonaResidencial")
+                                                                           EZonaResidencial codigo) {
+        return zrDetalhamentoService.buscarPorZonaResidencial(codigo);
     }
 
     @GetMapping("/cep/{cep}")

@@ -4,9 +4,12 @@ import br.com.guiadeprojetoapi.guiadeprojetoapi.config.exception.ValidacaoExcept
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.model.Endereco;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.repository.EnderecoRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.SubZonaResponse;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.enums.EZonaResidencial;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ZrDetalhamento;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.ClassificacaoResidencialRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.InscricaoImobiliariaRepository;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.ZonaResidencialRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.ZrDetalhamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse.of;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.ZONA_RESIDENCIAL_NAO_ENCONTRADA;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
@@ -27,6 +31,8 @@ public class ZrDetalhamentoService {
     private InscricaoImobiliariaRepository inscricaoImobiliariaRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private ZonaResidencialRepository zonaResidencialRepository;
 
     public InscricaoImobiliariaResponse buscarPorInscricaoImobiliaria(String inscricaoImobiliariaCodigo) {
 
@@ -64,5 +70,12 @@ public class ZrDetalhamentoService {
     public List<ZrDetalhamento> buscarDetalhamentos(Integer zonaResidencialId, Integer classificacaoResidencialId) {
         return detalhamentoRepository
             .findByZonaResidencialIdAndClassificacaoResidencialId(zonaResidencialId, classificacaoResidencialId);
+    }
+
+    public SubZonaResponse buscarPorZonaResidencial(EZonaResidencial codigo) {
+        var zonaResidencial = zonaResidencialRepository.findByCodigo(codigo)
+            .orElseThrow(ZONA_RESIDENCIAL_NAO_ENCONTRADA::getException);
+        return SubZonaResponse.of(classificacaoResidencialRepository
+            .findByZonaResidencialId(zonaResidencial.getId()), zonaResidencial);
     }
 }
