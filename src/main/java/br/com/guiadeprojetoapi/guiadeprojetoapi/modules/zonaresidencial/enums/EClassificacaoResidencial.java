@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum EClassificacaoResidencial {
 
-    RA("Residencial Agrupada (RA)"),
+    RA("Residencial Agrupada"),
     RMHA("Residencial Multifamiliar Horizontal Agrupada"),
     RMHV("Residencial Multifamiliar Horizontal em Vilas"),
     RMHI("Residencial Multifamiliar Horizontal Isolada"),
