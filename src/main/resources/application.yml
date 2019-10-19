@@ -4,7 +4,7 @@ spring:
     jdbc-url: jdbc:postgresql://ec2-54-243-253-181.compute-1.amazonaws.com:5432/d953i231tmtnlp
     username: eamjiigsjvvsoq
     password: 7e85b51ee0e623a23727e672a98815af26edbb9b410b8f3be286ffda8243964d
-#    jdbc-url: jdbc:postgresql://sqlvhnegrisoli.ddns.net:5432/guia_de_projeto
+#    jdbc-url: jdbc:postgresql://localhost:5432/guia_de_projeto
 #    username: postgres
 #    password: 1y5h8j
     initialization-mode: always
