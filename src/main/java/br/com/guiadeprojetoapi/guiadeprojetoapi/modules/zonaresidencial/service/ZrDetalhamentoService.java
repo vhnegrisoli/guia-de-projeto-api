@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse.of;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.DETALHAMENTO_NAO_ENCONTRADO;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.ZONA_RESIDENCIAL_NAO_ENCONTRADA;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -67,9 +68,10 @@ public class ZrDetalhamentoService {
         }
     }
 
-    public List<ZrDetalhamento> buscarDetalhamentos(Integer zonaResidencialId, Integer classificacaoResidencialId) {
+    public ZrDetalhamento buscarDetalhamentos(Integer zonaResidencialId, Integer classificacaoResidencialId) {
         return detalhamentoRepository
-            .findByZonaResidencialIdAndClassificacaoResidencialId(zonaResidencialId, classificacaoResidencialId);
+            .findByZonaResidencialIdAndClassificacaoResidencialId(zonaResidencialId, classificacaoResidencialId)
+            .orElseThrow(DETALHAMENTO_NAO_ENCONTRADO::getException);
     }
 
     public SubZonaResponse buscarPorZonaResidencial(EZonaResidencial codigo) {

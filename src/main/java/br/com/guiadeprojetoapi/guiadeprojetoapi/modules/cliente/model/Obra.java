@@ -1,12 +1,17 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.cliente.model;
 
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.cliente.dto.ObraRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,4 +37,16 @@ public class Obra {
     @ManyToOne
     @NotNull
     Cliente cliente;
+
+    @JsonIgnore
+    public boolean isNovoCadastro() {
+        return isEmpty(id);
+    }
+
+    public static Obra of(ObraRequest request, Cliente cliente) {
+        var obra = new Obra();
+        BeanUtils.copyProperties(request, obra);
+        obra.setCliente(cliente);
+        return obra;
+    }
 }

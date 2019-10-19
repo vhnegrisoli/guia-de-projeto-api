@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/zona-residencial/detalhamento")
 public class ZrDetalhamentoController {
@@ -37,8 +35,8 @@ public class ZrDetalhamentoController {
     }
 
     @GetMapping("zoneamento/{zonaResidencialId}/sub-zoneamento/{classificacaoResidencialId}")
-    public List<ZrDetalhamento> buscarDetalhamentos(@PathVariable Integer zonaResidencialId,
-                                                    @PathVariable Integer classificacaoResidencialId) {
+    public ZrDetalhamento buscarDetalhamento(@PathVariable Integer zonaResidencialId,
+                                             @PathVariable Integer classificacaoResidencialId) {
         return zrDetalhamentoService.buscarDetalhamentos(zonaResidencialId, classificacaoResidencialId);
     }
 }
