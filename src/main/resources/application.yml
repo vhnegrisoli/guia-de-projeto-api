@@ -30,3 +30,7 @@ oauth-clients:
   guia_de_projeto_api:
     client: guia-de-projeto-api-client
     secret: guia-de-projeto-api-secret
+
+server:
+  ssl:
+    enableSNIExtension: false
