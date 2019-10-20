@@ -3,10 +3,11 @@ package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.service
 import br.com.guiadeprojetoapi.guiadeprojetoapi.config.exception.ValidacaoException;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.model.Endereco;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.localizacao.repository.EnderecoRepository;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.DetalhamentoRequest;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.DetalhamentoResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.SubZonaResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.enums.EZonaResidencial;
-import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.model.ZrDetalhamento;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.ClassificacaoResidencialRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.InscricaoImobiliariaRepository;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.repository.ZonaResidencialRepository;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.DetalhamentoResponse.of;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse.of;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.DETALHAMENTO_NAO_ENCONTRADO;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.ZONA_RESIDENCIAL_NAO_ENCONTRADA;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
+@SuppressWarnings("PMD.TooManyStaticImports")
 public class ZrDetalhamentoService {
 
     @Autowired
@@ -68,10 +71,11 @@ public class ZrDetalhamentoService {
         }
     }
 
-    public ZrDetalhamento buscarDetalhamentos(Integer zonaResidencialId, Integer classificacaoResidencialId) {
-        return detalhamentoRepository
-            .findByZonaResidencialIdAndClassificacaoResidencialId(zonaResidencialId, classificacaoResidencialId)
-            .orElseThrow(DETALHAMENTO_NAO_ENCONTRADO::getException);
+    public DetalhamentoResponse buscarDetalhamentos(DetalhamentoRequest request) {
+        return of(detalhamentoRepository
+            .findByZonaResidencialIdAndClassificacaoResidencialId(request.getZonaResidencialId(),
+                request.getClassificacaoResidencialId())
+            .orElseThrow(DETALHAMENTO_NAO_ENCONTRADO::getException), request.getArea());
     }
 
     public SubZonaResponse buscarPorZonaResidencial(EZonaResidencial codigo) {
