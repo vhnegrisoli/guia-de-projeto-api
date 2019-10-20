@@ -50,11 +50,7 @@ public class DetalhamentoResponse {
     private Double areaLazer;
 
     private Double getCalculos(Double campo, Double area) {
-        return Precision.round(validarValorExistente(campo) * area, DOIS);
-    }
-
-    private Double validarValorExistente(Double campo) {
-        return isEmpty(campo) ? ZERO : campo;
+        return isEmpty(campo) ? null : Precision.round(campo * area, DOIS);
     }
 
     public static DetalhamentoResponse of(ZrDetalhamento detalhamento, Double area) {
