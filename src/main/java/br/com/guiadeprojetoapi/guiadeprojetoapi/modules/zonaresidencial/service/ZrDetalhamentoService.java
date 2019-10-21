@@ -19,8 +19,7 @@ import java.util.List;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.DetalhamentoResponse.of;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.dto.InscricaoImobiliariaResponse.of;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.DETALHAMENTO_NAO_ENCONTRADO;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.ZONA_RESIDENCIAL_NAO_ENCONTRADA;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.zonaresidencial.exception.ZonaResidencialException.*;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
@@ -72,10 +71,17 @@ public class ZrDetalhamentoService {
     }
 
     public DetalhamentoResponse buscarDetalhamentos(DetalhamentoRequest request) {
+        validarAreaVazia(request);
         return of(detalhamentoRepository
             .findByZonaResidencialIdAndClassificacaoResidencialId(request.getZonaResidencialId(),
                 request.getClassificacaoResidencialId())
             .orElseThrow(DETALHAMENTO_NAO_ENCONTRADO::getException), request.getArea());
+    }
+
+    private void validarAreaVazia(DetalhamentoRequest request) {
+        if (isEmpty(request.getArea())) {
+            throw AREA_VAZIA.getException();
+        }
     }
 
     public SubZonaResponse buscarPorZonaResidencial(EZonaResidencial codigo) {
