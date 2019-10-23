@@ -12,10 +12,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
-import java.util.List;
-
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.*;
-import static java.util.Arrays.asList;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.USER;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.ADMIN;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.APPLICATION;
 
 @Configuration
 @EnableResourceServer

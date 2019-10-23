@@ -26,13 +26,10 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
 
     public void save(UsuarioRequest usuarioRequest) {
         var usuario = of(usuarioRequest);
         validarDadosUsuario(usuario);
-//        usuario.setSenha(passwordEncoder.encode(usuarioRequest.getSenha()));
         usuarioRepository.save(usuario);
     }
 
