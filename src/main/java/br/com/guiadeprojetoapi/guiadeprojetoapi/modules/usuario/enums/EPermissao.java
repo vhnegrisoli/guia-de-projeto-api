@@ -5,7 +5,8 @@ import lombok.Getter;
 public enum EPermissao {
 
     USER("Usuário"),
-    ADMIN("Administrador");
+    ADMIN("Administrador"),
+    APPLICATION("APPLICATION");
 
     @Getter
     private String descricao;

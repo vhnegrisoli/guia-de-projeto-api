@@ -2,22 +2,23 @@ package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.service;
 
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioRequest;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.repository.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado.of;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.exception.UsuarioException.*;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario.of;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado.of;
 
 @Service
 @Slf4j
@@ -25,13 +26,13 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     public void save(UsuarioRequest usuarioRequest) {
         var usuario = of(usuarioRequest);
         validarDadosUsuario(usuario);
-        usuario.setSenha(passwordEncoder.encode(usuarioRequest.getSenha()));
+//        usuario.setSenha(passwordEncoder.encode(usuarioRequest.getSenha()));
         usuarioRepository.save(usuario);
     }
 
@@ -111,5 +112,13 @@ public class UsuarioService {
             throw USUARIO_SEM_SESSAO.getException();
         }
         return email;
+    }
+
+    public List<UsuarioResponse> findAllClient() {
+        return usuarioRepository
+            .findAll()
+            .stream()
+            .map(UsuarioResponse::of)
+            .collect(Collectors.toList());
     }
 }

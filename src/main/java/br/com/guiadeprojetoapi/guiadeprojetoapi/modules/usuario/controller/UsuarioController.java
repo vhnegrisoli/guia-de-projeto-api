@@ -2,6 +2,7 @@ package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.controller;
 
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioRequest;
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioResponse;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.TipoAcesso;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.model.Usuario;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.repository.TipoAcessoRepository;
@@ -59,5 +60,10 @@ public class UsuarioController {
     @GetMapping("/logado")
     public UsuarioAutenticado findUsuarioAutenticadoByEmail() {
         return usuarioService.findUsuarioAutenticadoByEmail();
+    }
+
+    @GetMapping("/all")
+    public List<UsuarioResponse> getAllUsuarios() {
+        return usuarioService.findAllClient();
     }
 }
