@@ -12,9 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.BIOT_ADMIN;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.USER;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.ADMIN;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.APPLICATION;
 
 @Configuration
 @EnableResourceServer
@@ -46,9 +45,8 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
             .authorizeRequests()
             .antMatchers(permitAll).permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .antMatchers("/api/usuarios/all").hasAnyRole(APPLICATION.name())
-            .antMatchers("/api/usuarios/**").hasAnyRole(ADMIN.name(), USER.name(), APPLICATION.name())
-            .antMatchers("/api/zona-residencial/**").hasAnyRole(ADMIN.name(), USER.name(), APPLICATION.name());
+            .antMatchers("/api/usuarios/**").hasAnyRole(BIOT_ADMIN.name(), USER.name())
+            .antMatchers("/api/zona-residencial/**").hasAnyRole(BIOT_ADMIN.name(), USER.name());
     }
 
     @Override

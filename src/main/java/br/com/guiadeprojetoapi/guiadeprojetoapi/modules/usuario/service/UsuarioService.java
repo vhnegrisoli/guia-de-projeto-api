@@ -1,5 +1,6 @@
 package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.service;
 
+import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.UsuarioClient;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioAutenticado;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioRequest;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.dto.UsuarioResponse;
@@ -26,6 +27,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioClient usuarioClient;
 
     public void save(UsuarioRequest usuarioRequest) {
         var usuario = of(usuarioRequest);
@@ -71,17 +74,7 @@ public class UsuarioService {
     }
 
     public UsuarioAutenticado getUsuarioAutenticado() {
-        var email = "";
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        try {
-            if (principal instanceof UserDetails) {
-                email = ((UserDetails)principal).getUsername();
-            }
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            throw USUARIO_SEM_SESSAO.getException();
-        }
-        return of(usuarioRepository.findByEmail(email).orElseThrow(USUARIO_NAO_ENCONTRADO::getException));
+        return usuarioClient.getUsuarioAutenticado();
     }
 
     public List<Usuario> getUsuarios() {

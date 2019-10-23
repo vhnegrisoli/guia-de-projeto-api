@@ -12,7 +12,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.ADMIN;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.BIOT_ADMIN;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.usuario.enums.EPermissao.USER;
 
 @Data
@@ -33,7 +33,7 @@ public class UsuarioAutenticado {
     private String descricaoAcesso;
 
     public boolean isAdmin() {
-        return permissao.equals(ADMIN);
+        return permissao.equals(BIOT_ADMIN);
     }
 
     public boolean isUser() {
