@@ -26,11 +26,16 @@ spring:
         jdbc:
           lob.non_contextual_creation: true
 
-oauth-clients:
-  guia_de_projeto_api:
-    client: guia-de-projeto-api-client
-    secret: guia-de-projeto-api-secret
+app-config:
+  oauth-clients:
+    biot-admin:
+      client: biot_admin-client
+      secret: biot_admin-secret
+    guia_de_projeto_api:
+      client: guia-de-projeto-api-client
+      secret: guia-de-projeto-api-secret
 
 server:
+  port: 8090
   ssl:
     enableSNIExtension: false
