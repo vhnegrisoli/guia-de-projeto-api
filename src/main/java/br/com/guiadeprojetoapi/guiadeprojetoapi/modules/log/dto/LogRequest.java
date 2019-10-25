@@ -1,0 +1,25 @@
+package br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class LogRequest {
+
+    private Integer usuarioId;
+    private String usuarioNome;
+    private String usuarioEmail;
+    private String aplicacao;
+    private String urlAcessada;
+    private String metodo;
+    private String tipoOperacao;
+    private LocalDateTime dataAcesso;
+
+}

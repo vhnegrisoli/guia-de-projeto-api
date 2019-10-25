@@ -55,9 +55,4 @@ public class UsuarioController {
     public UsuarioAutenticado getUsuarioAutenticado() {
         return usuarioService.getUsuarioAutenticadoAtualizaUltimaData();
     }
-
-    @GetMapping("/logado")
-    public UsuarioAutenticado findUsuarioAutenticadoByEmail() {
-        return usuarioService.findUsuarioAutenticadoByEmail();
-    }
 }
