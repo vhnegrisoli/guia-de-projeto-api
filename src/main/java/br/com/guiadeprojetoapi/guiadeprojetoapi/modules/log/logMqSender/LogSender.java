@@ -9,13 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogSender {
 
-    @Value("${app-config.queue.usuario-log}")
-    private String usuarioLogMq;
-
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private RabbitTemplate template;
 
-    public void send(LogRequest request) {
-        rabbitTemplate.convertAndSend(request);
+    @Value("${app-config.queue.usuario-log}")
+    private String usuarioLog;
+
+    @Value("${app-config.key.usuario-log}")
+    private String usuarioLogKey;
+
+    public void produceMessage(LogRequest request) {
+        template.convertAndSend(usuarioLog, request);
+    }
+
+    public void produceMessageKey(LogRequest request) {
+        template.convertAndSend("biot-admin.topic", usuarioLogKey, request);
     }
 }

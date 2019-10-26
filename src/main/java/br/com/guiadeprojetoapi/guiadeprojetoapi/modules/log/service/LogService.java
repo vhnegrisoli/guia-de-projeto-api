@@ -38,7 +38,7 @@ public class LogService {
     public void gerarLogUsuario(HttpServletRequest request) {
         var usuarioLogado = usuarioService.getUsuarioAutenticado();
         if (!URLS_IGNORADAS.contains(request.getRequestURI())) {
-            logSender.send(LogRequest
+            var log = LogRequest
                 .builder()
                 .dataAcesso(LocalDateTime.now())
                 .aplicacao(APLICACAO)
@@ -48,7 +48,8 @@ public class LogService {
                 .usuarioId(usuarioLogado.getId())
                 .usuarioNome(usuarioLogado.getNome())
                 .usuarioEmail(usuarioLogado.getEmail())
-                .build());
+                .build();
+            logSender.produceMessage(log);
         }
     }
 
