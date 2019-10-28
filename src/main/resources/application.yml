@@ -1,11 +1,12 @@
 spring:
 
   rabbitmq:
-    host: localhost
-#    host: sqlvhnegrisoli.ddns.net
+#    host: localhost
+    host: sqlvhnegrisoli.ddns.net
     port: 5672
     username: biotadmin
     password: biotadmin
+#    url: amqp://yfsypxcf:wrX6LNWtKlsRd0l1ICC5TNEWf0yCpF1f@skunk.rmq.cloudamqp.com/yfsypxcf
 
   datasource:
     driver-class-name: org.postgresql.Driver
