@@ -3,21 +3,21 @@ package br.com.guiadeprojetoapi.guiadeprojetoapi.config;
 import br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 
-@ControllerAdvice
 @Component
-public class ControllerLogger {
+public class LogInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
     private LogService logService;
 
-    @InitBinder
-    public void initBinder(HttpServletRequest request) throws IOException {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws Exception {
         logService.gerarLogUsuario(request);
+        return true;
     }
 }

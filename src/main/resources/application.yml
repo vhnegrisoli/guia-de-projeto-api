@@ -1,5 +1,7 @@
 spring:
 
+  main:
+    allow-bean-definition-overriding: true
   rabbitmq:
 #    host: localhost
 #    host: sqlvhnegrisoli.ddns.net
