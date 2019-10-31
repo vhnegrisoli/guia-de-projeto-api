@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @ControllerAdvice
 @Component
@@ -16,7 +17,7 @@ public class ControllerLogger {
     private LogService logService;
 
     @InitBinder
-    public void initBinder(HttpServletRequest request) {
+    public void initBinder(HttpServletRequest request) throws IOException {
         logService.gerarLogUsuario(request);
     }
 }

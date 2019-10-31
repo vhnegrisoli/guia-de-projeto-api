@@ -7,17 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.config.Aplicacao.APLICACAO;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.enums.ETipoOperacao.ALTERANDO;
-import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.enums.ETipoOperacao.SALVANDO;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.enums.ETipoOperacao.CONSULTANDO;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.enums.ETipoOperacao.SALVANDO;
 import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.enums.ETipoOperacao.REMOVENDO;
+import static br.com.guiadeprojetoapi.guiadeprojetoapi.modules.log.enums.ETipoOperacao.ALTERANDO;
 import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
 @Service
 @SuppressWarnings("PMD.TooManyStaticImports")
@@ -35,7 +36,7 @@ public class LogService {
     @Autowired
     private LogSender logSender;
 
-    public void gerarLogUsuario(HttpServletRequest request) {
+    public void gerarLogUsuario(HttpServletRequest request) throws IOException {
         var usuarioLogado = usuarioService.getUsuarioAutenticado();
         if (!URLS_IGNORADAS.contains(request.getRequestURI())) {
             var log = LogRequest
