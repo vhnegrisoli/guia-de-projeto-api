@@ -40,17 +40,13 @@ public class IntegracaoService {
     }
 
     public String getZoneamentoQuery(ConsultaLocalizacaoRequest request) {
-        return "https://siglon.londrina.pr.gov.br/arcgis/rest/services/Zoneamento/MapServer/0/query?f=json&"
-            + "returnGeometry=true"
-            + "&spatialRel=esriSpatialRelIntersects"
-            + "&maxAllowableOffset=0"
-            + "&geometry=%7B%22xmin%22%3A" + request.getXmin() + "%2C%22ymin%22%3A" + request.getYmin()
-            + "%2C%22xmax%22%3A" + request.getXmax() + "%2C%22ymax%22%3A" + request.getYmax()
-            + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A" + request.getWkid() + "%7D%7D"
-            + "&geometryType=esriGeometryEnvelope"
-            + "&outFields=zoneamento_2019%2Cdatas%2Cquadras%2Cn_loteamen%2Cgleba%2Cparametros%2"
-            + "Clei_12_236%2Cobjectid%2Czonea_2015%2Cobjectid_1%2Calteracao_%2Clei_de_alteracao"
-            + "&outSR=102100";
+        return "https://geo.londrina.pr.gov.br/server/rest/services/Gerais/UsoOcupacao/MapServer/0/query?f=json&"
+            + "returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometry=%7B%22xmin%22%3A" + request.getXmin()
+            + "%2C%22ymin%22%3A" + request.getYmin() + "%2C%22xmax%22%3A" + request.getXmax()
+            + "%2C%22ymax%22%3A" + request.getYmax() + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A"
+            + request.getWkid() + "%7D%7D&geometryType=esriGeometryEnvelope&inSR=102100&outFields=quadras%2Cdatas%2C"
+            + "nomeloteamen%2Cgleba%2Cparametros%2C"
+            + "zoneam2015%2Clei12236%2Calteracao%2Cleidealteracao%2Czoneamento2019&outSR=" + request.getWkid();
     }
 
     private HttpURLConnection getRequestConnection(String query) throws IOException {
